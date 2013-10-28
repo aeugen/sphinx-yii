@@ -93,7 +93,7 @@ class SphinxDataProvider extends CActiveDataProvider
       return $ids;
     }
 
-	// Convert array of IDs to CSV
+	  // Convert array of IDs to CSV
     $ids_list = implode(',',$ids);
 
     // Set the query condition to find models for the search results
