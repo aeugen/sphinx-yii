@@ -1,0 +1,31 @@
+{
+    "name": "sergebezborodov/sphinx-yii",
+    "description": "Extension for work with Sphinx Search.",
+    "version": "1.0.0-beta",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Serge Bezborodov",
+            "email": "serge@bezborodov.net",
+            "role": "Author"
+        },
+        {
+            "name": "Alex Sharov",
+            "email": "www.pismeco@gmail.com",
+            "role": "Contributor"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "ESphinxBaseConnection.php",
+            "ESphinxApiConnection.php",
+            "ESphinxMysqlConnection.php",
+            "ESphinxException.php",
+            "ESphinxQuery.php",
+            "ESphinxResult.php",
+            "ESphinxSearchCriteria.php",
+            "enums/",
+            "ql/"
+        ]
+    }
+}
