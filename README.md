@@ -38,9 +38,6 @@ in config (assumes you have 'vendor' alias to composer directory):
 ```php
 'components' => array(
     'sphinx' => array(
-<<<<<<< HEAD
-        'class' => 'ext.sphinx.ESphinxConnection',
-=======
         'class' => 'vendor.sergebezborodov.sphinx-yii.ESphinxApiConnection', // sphinx api mode
         //'class' => 'vendor.sergebezborodov.sphinx-yii.ESphinxMysqlConnection', for sphinx ql mode
         'server' => array('localhost', 3386),
@@ -67,7 +64,6 @@ Download and extract source in protected/extensions folder. In config add:
     'sphinx' => array(
         'class' => 'ext.sphinx.ESphinxApiConnection', // sphinx api mode
         //'class' => 'ext.sphinx.ESphinxMysqlConnection', for sphinx ql mode
->>>>>>> upstream/master
         'server' => array('localhost', 3386),
         'connectionTimeout' => 3, // optional, default 0 - no limit
         'queryTimeout'      => 5, // optional, default 0 - no limit
@@ -130,32 +126,6 @@ $criteria->deleteFilter('site'); // delete filter on site_id field
 // querying....
 ```
 
-<<<<<<< HEAD
-Using The DataProvider
-----------------------
-A simpler way to search is to use the ESphinxDataProvider to automatically fetch the models for your search results.
-
-Example searching Post model:
-```php
-  $dataProvider=new ESphinxDataProvider('Post', array(
-      'query'=>'@title learn php',
-      'sphinxCriteria' => new ESphinxCriteria(array(
-         'matchMode' => ESphinxMatch::EXTENDED,
-       )),
-      'criteria'=>array(
-         'condition'=>'author.name = :author',
-         'params'=>array(':author'=>'Mark O\'Keeffe'),
-         'order'=>'create_time DESC',
-         'with'=>array('author'),
-      ),
-      'pagination'=>array(
-         'pageSize'=>20,
-      ),
-  ));
-```
-
-Then use the dataprovider as normal
-=======
 
 Multi queries
 -------------
@@ -192,4 +162,28 @@ Be sure you are using right functions for your version.
 ####Sort Methods
 For SPH_SORT_EXTENDED (ESphinxSort::EXTENDED) you should use setOrders() or addOrder() method.
 For others sort modes use setSortBy() for one field.
->>>>>>> upstream/master
+
+Using The DataProvider
+----------------------
+A simpler way to search is to use the ESphinxDataProvider to automatically fetch the models for your search results.
+
+Example searching Post model:
+```php
+  $dataProvider=new ESphinxDataProvider('Post', array(
+      'query'=>'@title learn php',
+      'sphinxCriteria' => new ESphinxCriteria(array(
+         'matchMode' => ESphinxMatch::EXTENDED,
+       )),
+      'criteria'=>array(
+         'condition'=>'author.name = :author',
+         'params'=>array(':author'=>'Mark O\'Keeffe'),
+         'order'=>'create_time DESC',
+         'with'=>array('author'),
+      ),
+      'pagination'=>array(
+         'pageSize'=>20,
+      ),
+  ));
+```
+
+Then use the dataprovider as normal
