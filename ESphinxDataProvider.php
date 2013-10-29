@@ -104,14 +104,6 @@ class ESphinxDataProvider extends CActiveDataProvider
       $criteria->condition = $condition;
     }
 
-    // Set the order to match the order the IDs are returned from Sphinx
-    $order = 'FIELD(t.id, '.$ids_list.')';
-    if ($criteria->order) {
-      $criteria->order .= ','.$order;
-    } else {
-      $criteria->order = $order;
-    }
-
     // Set the sorting criteria on the limited search results
     $baseCriteria=$this->model->getDbCriteria(false);
     if (($sort=$this->getSort())!==false) {
@@ -125,6 +117,15 @@ class ESphinxDataProvider extends CActiveDataProvider
       }
       $sort->applyOrder($criteria);
     }
+
+    // Set the order to match the order the IDs are returned from Sphinx
+    $order = 'FIELD(t.id, '.$ids_list.')';
+    if ($criteria->order) {
+      $criteria->order .= ','.$order;
+    } else {
+      $criteria->order = $order;
+    }
+
     $this->model->setDbCriteria($baseCriteria!==null ? clone $baseCriteria : null);
     // Select the models
     $data=$this->model->findAll($criteria);
