@@ -26,7 +26,7 @@
  * </pre>
  *
  */
-class SphinxDataProvider extends CActiveDataProvider
+class ESphinxDataProvider extends CActiveDataProvider
 {
 
   public $query;
