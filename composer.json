@@ -24,6 +24,7 @@
             "ESphinxQuery.php",
             "ESphinxResult.php",
             "ESphinxSearchCriteria.php",
+            "ESphinxDataProvider.php",
             "enums/",
             "ql/"
         ]
