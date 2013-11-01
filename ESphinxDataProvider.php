@@ -29,10 +29,28 @@
 class ESphinxDataProvider extends CActiveDataProvider
 {
 
+  /**
+   * The query string
+   * @var string
+   */
   public $query;
+
+  /**
+   * Sphinx search criteria
+   * @var ESphinxSearchCriteria
+   */
   public $sphinxCriteria;
+
+  /**
+   * Sphinx criteria limit
+   * @var int
+   */
   public $limit = 100;
 
+  /**
+   * Sphinx query result object
+   * @var ESphinxResult
+   */
   private $_result;
 
   /**
