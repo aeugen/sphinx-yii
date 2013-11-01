@@ -42,13 +42,6 @@ class ESphinxDataProvider extends CActiveDataProvider
   public $sphinxCriteria;
 
   /**
-   * IDs to exclude from result set
-   *
-   * @var array
-   */
-  public $excludeIds = array();
-
-  /**
    * Sphinx criteria limit
    * @var int
    */
@@ -112,10 +105,7 @@ class ESphinxDataProvider extends CActiveDataProvider
     // Get an array of model IDs from the search result
     $ids = $result->getAttributeList('id');
 
-    // Remove any IDs in the exclusion array
-    $ids = array_diff($ids, $this->excludeIds);
-
-	// No results in search? Return empty array
+	  // No results in search? Return empty array
     if (!count($ids)) {
       return $ids;
     }
