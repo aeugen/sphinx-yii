@@ -104,7 +104,7 @@ abstract class ESphinxBaseConnection extends CComponent
      * @return array
      * @link http://sphinxsearch.com/docs/current.html#api-func-buildexcerpts
      */
-    abstract public function createExcerts(array $docs, $index, $words, array $opts = array());
+    abstract public function createExcerpts(array $docs, $index, $words, array $opts = array());
 
     /**
      * Extracts keywords from query using tokenizer settings for given index, optionally with per-keyword

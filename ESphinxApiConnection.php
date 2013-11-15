@@ -175,7 +175,7 @@ class ESphinxApiConnection extends ESphinxBaseConnection
      * @return array
      * @link http://sphinxsearch.com/docs/current.html#api-func-buildexcerpts
      */
-    public function createExcerts(array $docs, $index, $words, array $opts = array())
+    public function createExcerpts(array $docs, $index, $words, array $opts = array())
     {
         return $this->sphinxClient->BuildExcerpts($docs, $index, $words, $opts);
     }
