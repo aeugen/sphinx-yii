@@ -48,6 +48,12 @@ class ESphinxDataProvider extends CActiveDataProvider
   public $limit = 100;
 
   /**
+   * List of Sphinx indexes to query
+   * @var string
+   */
+  public $indexes = '*';
+
+  /**
    * Sphinx query result object
    * @var ESphinxResult
    */
@@ -173,7 +179,7 @@ class ESphinxDataProvider extends CActiveDataProvider
     if ($this->_result === null || $refresh) {
       // Execute the search query
       $this->_result = Yii::app()->sphinx->executeQuery(
-        new ESphinxQuery(trim($this->query), '*', $this->sphinxCriteria)
+        new ESphinxQuery(trim($this->query), $this->indexes, $this->sphinxCriteria)
       );
     }
     // Has the search found any results?
