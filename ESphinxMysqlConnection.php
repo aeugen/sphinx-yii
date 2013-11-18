@@ -230,7 +230,10 @@ class ESphinxMysqlConnection extends ESphinxBaseConnection
    */
   public function escape($string)
   {
-    return $this->db->quoteValue($string);
+    $from = array ( '\\', '(',')','|','-','!','@','~','"','&', '/', '^', '$', '=' );
+    $to   = array ( '\\\\', '\(','\)','\|','\-','\!','\@','\~','\"', '\&', '\/', '\^', '\$', '\=' );
+
+    return str_replace ( $from, $to, $string );
   }
 
   /**
