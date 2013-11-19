@@ -437,7 +437,7 @@ class ESphinxMysqlConnection extends ESphinxBaseConnection
           $order .= 'DESC';
           break;
         case ESphinxSort::RELEVANCE:
-          $order = '@weight DESC';
+          $order = '`weight` DESC';
           break;
         default:
           throw new ESphinxException('Not implemented for Sphinx Ql connection');
