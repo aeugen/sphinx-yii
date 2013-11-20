@@ -230,10 +230,7 @@ class ESphinxMysqlConnection extends ESphinxBaseConnection
    */
   public function escape($string)
   {
-    $from = array ( '\\', '(',')','|','-','!','@','~','"','&', '/', '^', '$', '=' );
-    $to   = array ( '\\\\', '\(','\)','\|','\-','\!','\@','\~','\"', '\&', '\/', '\^', '\$', '\=' );
-
-    return str_replace ( $from, $to, $string );
+    return $this->db->quoteValue($string);
   }
 
   /**
@@ -253,18 +250,22 @@ class ESphinxMysqlConnection extends ESphinxBaseConnection
    */
   public function executeQuery(ESphinxQuery $query)
   {
+    /** @var ESphinxQlCommandBuilder $cb */
     $cb = $this->db->getCommandBuilder();
-    $command = $cb->createFindCommand(
+    // Create the find query
+    $findCommand = $cb->createFindCommand(
       $query->getIndexes(),
       $this->createDbCriteria($query)
     );
-    $reader = $command->query();
+    // Creat the meta query
+    $metaCommand = $cb->createMetaCommand();
 
-    $matches = $reader->readAll();
-    $reader->nextResult();
-    $metaInfo = $reader->readAll();
+    // Execute the queries
+    $matches = $findCommand->query();
+    $meta = $metaCommand->query();
 
-    return $this->createResult($matches, $metaInfo);
+    // Create a result object from the queries
+    return $this->createResult($matches, $meta);
   }
 
 
@@ -317,22 +318,25 @@ class ESphinxMysqlConnection extends ESphinxBaseConnection
     return $result;
   }
 
+  /**
+   *
+   *
+   * @param CDbDataReader $matches
+   * @param CDbDataReader $metaInfo
+   *
+   * @return ESphinxResult
+   */
   private function createResult($matches, $metaInfo)
   {
-    $meta = array(
-      'matches' => array(),
-      'total' => count($matches),
-      'total_found' => count($matches),
-      'words' => '',
-      'error' => '',
-      'warning' => '',
-    );
+    $meta = array();
     foreach ($metaInfo as $item) {
-      list($name, $value) = array_values($item);
-      // todo: parse arrays identifier
-      $meta[$name] = $value;
+      switch ($item['Variable_name']) {
+        case 'total' :
+        case 'total_found' :
+          $meta[$item['Variable_name']] = $item['Value'];
+      }
     }
-    $meta['matches'] = $matches;
+    $meta['matches'] = $matches->readAll();
 
     return new ESphinxResult($meta);
   }
@@ -341,7 +345,7 @@ class ESphinxMysqlConnection extends ESphinxBaseConnection
   /**
    * @param  $query
    *
-   * @return CDbCriteria
+   * @return ESphinxQlCriteria
    */
   private function createDbCriteria(ESphinxQuery $query)
   {
@@ -437,7 +441,7 @@ class ESphinxMysqlConnection extends ESphinxBaseConnection
           $order .= 'DESC';
           break;
         case ESphinxSort::RELEVANCE:
-          $order = '`weight` DESC';
+          $order = '@weight DESC';
           break;
         default:
           throw new ESphinxException('Not implemented for Sphinx Ql connection');
